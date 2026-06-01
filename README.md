@@ -5,10 +5,8 @@ development. It packages focused workflows for project setup, adaptive UI,
 widget architecture, native integrations, testing, runtime debugging, DevTools
 profiling, and memory investigation.
 
-The plugin is modeled after the role-based workflow design of the curated
-`Build iOS Apps` plugin. It does not translate iOS APIs literally. Instead, it
-maps each development responsibility to the Flutter tools and conventions that
-fit a multi-platform Dart application.
+The plugin organizes each development responsibility around the Flutter tools
+and conventions that fit a multi-platform Dart application.
 
 ## What This Plugin Is
 
@@ -55,30 +53,6 @@ A single task can activate more than one skill. For example:
   `flutter-devtools-performance`, and `flutter-debugger-agent`
 - a custom native capability can use `flutter-platform-integrations`,
   `flutter-testing`, and a platform-specific toolchain
-
-## Relationship To Build iOS Apps
-
-The Flutter plugin mirrors the development roles covered by `Build iOS Apps`
-while using Flutter-native tooling and cross-platform boundaries.
-
-| Build iOS Apps role | Build Flutter Apps skill | Flutter adaptation |
-| --- | --- | --- |
-| `ios-debugger-agent` | `flutter-debugger-agent` | Uses Flutter CLI, Dart VM Service, DevTools, hot reload, target logs, and explicit device selection |
-| `ios-ettrace-performance` | `flutter-devtools-performance` | Uses Flutter profile mode, DevTools Frames, Timeline Events, CPU profiler, app-size analysis, and exported timeline JSON |
-| `ios-memgraph-leaks` | `flutter-memory-leaks` | Uses DevTools Memory view, heap snapshots, diffs, trace instances, retaining paths, and platform tools when native memory is involved |
-| `swiftui-performance-audit` | `flutter-performance-audit` | Reviews rebuild scope, widget construction, layout, paint effects, images, synchronous work, and platform-channel cost before profiling |
-| `swiftui-ui-patterns` | `flutter-ui-patterns` | Applies immutable UI state, unidirectional data flow, MVVM boundaries, navigation, async states, accessibility, and dependency injection |
-| `swiftui-view-refactor` | `flutter-view-refactor` | Splits large widget trees, moves work out of `build`, narrows dependencies, stabilizes identity, and fixes lifecycle ownership |
-| `swiftui-liquid-glass` | `flutter-adaptive-ui` | Covers modern adaptive UI across phone, tablet, foldable, desktop, and web window sizes rather than a single Apple visual language |
-| `ios-app-intents` | `flutter-platform-integrations` | Covers deep links, App Links, Universal Links, platform channels, Pigeon APIs, plugins, and native handoff paths |
-
-Flutter also needs two explicit workflows that are broader than the iOS plugin's
-surface:
-
-| Additional Flutter skill | Why it exists |
-| --- | --- |
-| `flutter-project-setup` | Flutter projects frequently need SDK, package, code-generation, flavor, and target-platform configuration work |
-| `flutter-testing` | Flutter has distinct unit, widget, golden, integration, plugin, and native-host test layers that should be selected deliberately |
 
 ## Included Skills
 
