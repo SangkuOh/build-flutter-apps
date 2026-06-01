@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter Performance Audit"
+  short_description: "Audit Flutter runtime performance from code"
+  default_prompt: "Use $flutter-performance-audit to review this Flutter code for rebuild, layout, paint, and scrolling costs."

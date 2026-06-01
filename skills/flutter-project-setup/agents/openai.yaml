@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter Project Setup"
+  short_description: "Set up modern Flutter and Dart projects"
+  default_prompt: "Use $flutter-project-setup to configure this Flutter project with current SDK, package, and platform conventions."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter DevTools Performance"
+  short_description: "Profile Flutter frames, CPU, and rendering"
+  default_prompt: "Use $flutter-devtools-performance to capture focused Flutter profile-mode evidence and identify expensive work."

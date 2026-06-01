@@ -1,0 +1,41 @@
+{
+  "name": "build-flutter-apps",
+  "version": "0.1.0",
+  "description": "Build Flutter apps with workflows for Dart setup, adaptive UI, architecture, native integrations, testing, debugging, DevTools profiling, and memory investigation.",
+  "author": {
+    "name": "SangkuOh"
+  },
+  "license": "MIT",
+  "keywords": [
+    "flutter",
+    "dart",
+    "devtools",
+    "widgets",
+    "adaptive-ui",
+    "integration-test",
+    "platform-channels",
+    "pigeon",
+    "performance",
+    "debugging"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Build Flutter Apps",
+    "shortDescription": "Build, refine, test, profile, and debug Flutter apps with Dart, DevTools, and native platform workflows",
+    "longDescription": "Use Build Flutter Apps to set up current Flutter and Dart projects, build adaptive multi-platform UI, structure app architecture, refactor widget trees, add deep links and type-safe native integrations, test apps and plugins, audit runtime performance, analyze DevTools traces, investigate memory leaks, and debug apps on selected Flutter targets.",
+    "developerName": "SangkuOh",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Build or debug a Flutter app with Dart, adaptive widgets, testing, and DevTools."
+    ],
+    "brandColor": "#02569B",
+    "composerIcon": "./assets/build-flutter-apps.svg",
+    "logo": "./assets/build-flutter-apps.svg",
+    "screenshots": []
+  }
+}

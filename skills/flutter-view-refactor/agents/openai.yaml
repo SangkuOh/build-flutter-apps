@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter View Refactor"
+  short_description: "Refactor large Flutter widget files"
+  default_prompt: "Use $flutter-view-refactor to split and clean up this Flutter view without changing its behavior."

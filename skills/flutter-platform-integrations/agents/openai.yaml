@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter Platform Integrations"
+  short_description: "Build Flutter deep links and native integrations"
+  default_prompt: "Use $flutter-platform-integrations to add a Flutter deep link, plugin, or type-safe native platform integration."

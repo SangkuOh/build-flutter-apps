@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter Memory Leaks"
+  short_description: "Capture and prove Flutter memory leaks"
+  default_prompt: "Use $flutter-memory-leaks to capture Flutter memory snapshots, inspect retaining paths, and verify a leak fix."

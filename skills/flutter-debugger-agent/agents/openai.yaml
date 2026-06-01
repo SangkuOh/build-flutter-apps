@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter Debugger Agent"
+  short_description: "Build, launch, and debug Flutter apps"
+  default_prompt: "Use $flutter-debugger-agent to build, launch, and inspect the current Flutter app on a selected target."

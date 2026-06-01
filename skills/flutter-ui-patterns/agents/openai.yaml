@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter UI Patterns"
+  short_description: "Apply practical Flutter UI patterns"
+  default_prompt: "Use $flutter-ui-patterns to design or refactor this Flutter UI with strong state, navigation, and widget patterns."

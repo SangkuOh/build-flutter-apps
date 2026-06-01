@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter Adaptive UI"
+  short_description: "Build adaptive multi-platform Flutter UI"
+  default_prompt: "Use $flutter-adaptive-ui to implement or review this adaptive Flutter feature across target form factors."

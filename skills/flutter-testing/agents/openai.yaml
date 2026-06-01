@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter Testing"
+  short_description: "Test Flutter apps and plugins across layers"
+  default_prompt: "Use $flutter-testing to add or run the smallest useful Flutter unit, widget, integration, or plugin test."
