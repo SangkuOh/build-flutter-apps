@@ -113,15 +113,16 @@ flutter run -d <device-id>
 
 ### `flutter-browser-preview`
 
-Preview a running Flutter app inside the Codex in-app browser. For a generic
-Codex-internal preview request, use Flutter web-server first; do not launch an
-iOS Simulator, Android emulator, or desktop runner unless the user explicitly
-asks for platform-specific behavior.
+Preview a running Flutter app inside the visible Codex side-panel browser. For
+a generic Codex-internal preview request, use Flutter web-server first; do not
+launch an iOS Simulator, Android emulator, or desktop runner unless the user
+explicitly asks for platform-specific behavior.
 
 Use it for:
 
 - browser-visible proof that a Flutter UI rendered
 - live Codex browser previews with `flutter run -d web-server`
+- side-panel previews where the user can watch and interact while Codex edits
 - Android emulator or connected-device previews through an adb screenshot and
   input bridge when Android behavior matters
 - iOS Simulator previews through `serve-sim` when iOS behavior matters
@@ -132,7 +133,7 @@ The workflow chooses the preview path from the user's target requirement:
 
 | User requirement | Preview path |
 | --- | --- |
-| General Flutter UI preview, layout work, state flow, routing, visual iteration | Run `skills/flutter-browser-preview/scripts/flutter-web-preview.mjs` and open the printed URL in the Codex browser. |
+| General Flutter UI preview, layout work, state flow, routing, visual iteration | Run `skills/flutter-browser-preview/scripts/flutter-web-preview.mjs` and open the printed URL in the visible Codex side-panel browser. |
 | Android-specific plugin, permission, platform-channel, native-view, or rendering behavior | Run Flutter on an adb serial, then mirror the same serial with the Android emulator browser bridge. |
 | iOS-specific plugin, permission, platform-channel, native-view, Cupertino, or rendering behavior | Run Flutter on a simulator UDID, then mirror the same simulator with `serve-sim`. |
 
@@ -144,10 +145,11 @@ node skills/flutter-browser-preview/scripts/flutter-web-preview.mjs \
   --port 3278
 ```
 
-If the user says "Codex 내부", "in-app browser", or "프리뷰를 보고
-인터렉션" without naming Android or iOS behavior, choose the web preview path.
-Mobile previews are visual mirrors of real running Flutter targets, not the
-default Codex-internal Flutter preview.
+If the user says "Codex 내부", "사이드패널", "in-app browser", or "프리뷰를
+보고 인터렉션" without naming Android or iOS behavior, choose the web preview
+path and actually make the Codex side-panel browser visible on that URL. Mobile
+previews are visual mirrors of real running Flutter targets, not the default
+Codex-internal Flutter preview.
 
 ### `flutter-platform-integrations`
 
@@ -399,10 +401,12 @@ Expected workflow:
 1. Load `flutter-debugger-agent` and `flutter-browser-preview`.
 2. Treat web-server as the default target for Codex-internal preview.
 3. Run `flutter-web-preview.mjs` and open its printed local URL in the Codex
-   browser.
+   side-panel browser with the Browser plugin. Make the browser visible to the
+   user before reporting success.
 4. Use Android mirroring only when Android behavior is explicitly required.
 5. Use iOS Simulator mirroring only when iOS behavior is explicitly required.
-6. Verify a real Flutter frame in the browser before reporting success.
+6. Verify a real Flutter frame in the side-panel browser and perform at least
+   one relevant interaction before reporting success.
 
 ### Profile Jank
 
@@ -480,8 +484,9 @@ node skills/flutter-browser-preview/scripts/flutter-web-preview.mjs \
 ```
 
 Runs `flutter run -d web-server` on `127.0.0.1`, prints the Codex browser URL,
-and keeps the terminal attached for hot reload and logs. Extra Flutter run
-arguments can be passed after `--`.
+keeps the terminal attached for hot reload and logs, and reminds Codex to open
+the exact URL in the visible side-panel browser. Extra Flutter run arguments can
+be passed after `--`.
 
 ### Timeline Summary
 
@@ -616,8 +621,9 @@ The plugin is intentionally conservative about claiming success.
   native allocation behavior.
 - A lower total memory number alone is not treated as proof of a leak fix.
 - Platform integrations are tested on each affected host platform.
-- Browser previews prove that a real Flutter frame is visible, not only that a
-  localhost URL returned a response.
+- Browser previews prove that a real Flutter frame is visible in the Codex
+  side panel and accepts interaction, not only that a localhost URL returned a
+  response.
 - A separate Simulator or emulator appearing means the workflow has moved from
   Codex-internal Flutter preview to platform-runtime verification.
 - Golden files are not updated blindly.

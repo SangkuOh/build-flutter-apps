@@ -28,6 +28,7 @@ async function main() {
 
   console.log(`flutter-web-preview launching ${projectDir}`);
   console.log(`Preview at ${previewUrl}`);
+  console.log(`Open this exact URL in the visible Codex side-panel browser: ${previewUrl}`);
   console.log(`Command: ${quoteCommand([flutter, ...flutterArgs])}`);
   console.log("Keep this terminal open. Use the Flutter run session for hot reload and logs.");
 

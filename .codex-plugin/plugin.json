@@ -1,6 +1,6 @@
 {
   "name": "build-flutter-apps",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Build Flutter apps with workflows for Dart setup, adaptive UI, architecture, native integrations, browser previews, testing, debugging, DevTools profiling, and memory investigation.",
   "author": {
     "name": "SangkuOh"
@@ -24,7 +24,7 @@
   "interface": {
     "displayName": "Build Flutter Apps",
     "shortDescription": "Build, preview, test, profile, and debug Flutter apps with Dart, DevTools, and native workflows",
-    "longDescription": "Use Build Flutter Apps to set up current Flutter and Dart projects, build adaptive multi-platform UI, structure app architecture, refactor widget trees, preview Flutter apps inside the Codex in-app browser with a browser-first workflow, add deep links and type-safe native integrations, test apps and plugins, audit runtime performance, analyze DevTools traces, investigate memory leaks, and debug apps on selected Flutter targets.",
+    "longDescription": "Use Build Flutter Apps to set up current Flutter and Dart projects, build adaptive multi-platform UI, structure app architecture, refactor widget trees, preview Flutter apps inside the visible Codex side-panel browser with a browser-first workflow, add deep links and type-safe native integrations, test apps and plugins, audit runtime performance, analyze DevTools traces, investigate memory leaks, and debug apps on selected Flutter targets.",
     "developerName": "SangkuOh",
     "category": "Developer Tools",
     "capabilities": [
