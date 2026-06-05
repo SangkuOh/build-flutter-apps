@@ -5,6 +5,8 @@
   "author": {
     "name": "SangkuOh"
   },
+  "homepage": "https://github.com/SangkuOh/build-flutter-apps",
+  "repository": "https://github.com/SangkuOh/build-flutter-apps",
   "license": "MIT",
   "keywords": [
     "flutter",

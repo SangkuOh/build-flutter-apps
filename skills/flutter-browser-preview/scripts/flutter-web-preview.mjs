@@ -229,7 +229,7 @@ function quoteCommand(parts) {
 function printHelp() {
   console.log(`flutter-web-preview
 
-Run a Flutter web-server target for previewing inside the Codex in-app browser.
+Run a Flutter web-server target for previewing inside the visible Codex side-panel browser.
 
 Usage:
   flutter-web-preview [--project /path/to/app] [--port 3278]

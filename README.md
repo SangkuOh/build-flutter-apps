@@ -2,8 +2,9 @@
 
 `Build Flutter Apps` is a Codex plugin for modern Flutter and Dart application
 development. It packages focused workflows for project setup, adaptive UI,
-widget architecture, native integrations, Codex in-app browser previews,
-testing, runtime debugging, DevTools profiling, and memory investigation.
+widget architecture, native integrations, visible Codex side-panel browser
+previews, testing, runtime debugging, DevTools profiling, and memory
+investigation.
 
 The plugin organizes each development responsibility around the Flutter tools
 and conventions that fit a multi-platform Dart application.
@@ -56,6 +57,15 @@ A single task can activate more than one skill. For example:
   `flutter-browser-preview`
 - a custom native capability can use `flutter-platform-integrations`,
   `flutter-testing`, and a platform-specific toolchain
+
+## Current Release
+
+`v0.1.3` makes generic Flutter previews browser-first and side-panel visible.
+For ordinary Codex-internal UI iteration, Codex runs the bundled
+`flutter-web-preview.mjs` helper, opens the printed URL in the visible Codex
+side-panel browser, and verifies at least one real UI interaction before
+reporting success. Android and iOS runtime mirrors are reserved for
+platform-specific behavior.
 
 ## Included Skills
 
@@ -574,6 +584,14 @@ Install the plugin from the configured personal marketplace:
 ```bash
 codex plugin add build-flutter-apps@personal
 codex plugin list
+```
+
+To update an existing local install:
+
+```bash
+git -C ~/plugins/build-flutter-apps pull --ff-only
+codex plugin remove build-flutter-apps@personal
+codex plugin add build-flutter-apps@personal
 ```
 
 Start a new Codex thread after installation so the new plugin skills are
