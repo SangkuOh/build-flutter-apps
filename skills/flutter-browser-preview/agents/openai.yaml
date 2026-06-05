@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter Browser Preview"
+  short_description: "Preview Flutter apps in the Codex in-app browser"
+  default_prompt: "Use $flutter-browser-preview to launch a Flutter app on web, Android, or iOS and verify the live UI in the Codex browser."

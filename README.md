@@ -2,8 +2,8 @@
 
 `Build Flutter Apps` is a Codex plugin for modern Flutter and Dart application
 development. It packages focused workflows for project setup, adaptive UI,
-widget architecture, native integrations, testing, runtime debugging, DevTools
-profiling, and memory investigation.
+widget architecture, native integrations, Codex in-app browser previews,
+testing, runtime debugging, DevTools profiling, and memory investigation.
 
 The plugin organizes each development responsibility around the Flutter tools
 and conventions that fit a multi-platform Dart application.
@@ -20,7 +20,8 @@ designed to help Codex:
 - inspect an existing Flutter project before editing it
 - choose the smallest workflow that fits the task
 - preserve local architecture and package conventions
-- use Flutter CLI, Dart VM Service, DevTools, and native platform tools
+- use Flutter CLI, Dart VM Service, DevTools, Codex browser previews, and
+  native platform tools
 - prefer code-first diagnosis before collecting expensive runtime evidence
 - validate changes with the narrowest useful tests and builds
 - distinguish measured evidence from hypotheses
@@ -51,6 +52,8 @@ A single task can activate more than one skill. For example:
   `flutter-adaptive-ui`, and `flutter-testing`
 - a janky scrolling issue can use `flutter-performance-audit`,
   `flutter-devtools-performance`, and `flutter-debugger-agent`
+- a live UI preview can use `flutter-debugger-agent` and
+  `flutter-browser-preview`
 - a custom native capability can use `flutter-platform-integrations`,
   `flutter-testing`, and a platform-specific toolchain
 
@@ -107,6 +110,39 @@ It then runs the app with an explicit target when multiple devices exist:
 ```bash
 flutter run -d <device-id>
 ```
+
+### `flutter-browser-preview`
+
+Preview a running Flutter app inside the Codex in-app browser.
+
+Use it for:
+
+- browser-visible proof that a Flutter UI rendered
+- live web previews with `flutter run -d web-server`
+- Android emulator or connected-device previews through an adb screenshot and
+  input bridge
+- iOS Simulator previews through `serve-sim`
+- hot reload workflows where Codex keeps the UI visible while the terminal
+  remains attached to `flutter run`
+
+The workflow chooses the preview path from the selected target:
+
+| Target | Preview path |
+| --- | --- |
+| Web | Run `skills/flutter-browser-preview/scripts/flutter-web-preview.mjs` and open the printed URL. |
+| Android | Run Flutter on an adb serial, then mirror the same serial with the Android emulator browser bridge. |
+| iOS Simulator | Run Flutter on a simulator UDID, then mirror the same simulator with `serve-sim`. |
+
+Web preview example:
+
+```bash
+node skills/flutter-browser-preview/scripts/flutter-web-preview.mjs \
+  --project "$PWD" \
+  --port 3278
+```
+
+Mobile previews are visual mirrors of real running Flutter targets. Keep the
+`flutter run` terminal open for logs, VM Service, hot reload, and hot restart.
 
 ### `flutter-platform-integrations`
 
@@ -344,6 +380,26 @@ Expected workflow:
 6. Add `adb logcat` or native tools only when needed.
 7. Re-run the flow after the patch.
 
+### Preview In The Codex Browser
+
+Example prompt:
+
+```text
+Run this Flutter app and keep the UI visible in the Codex browser while we
+iterate.
+```
+
+Expected workflow:
+
+1. Load `flutter-debugger-agent` and `flutter-browser-preview`.
+2. Check `flutter devices` and choose web, Android, or iOS explicitly.
+3. For web, run `flutter-web-preview.mjs` and open its printed local URL.
+4. For Android, run `flutter run -d <adb-serial>` and mirror that serial with
+   the Android emulator browser bridge.
+5. For iOS Simulator, run `flutter run -d <simulator-udid>` and mirror that
+   simulator with `serve-sim`.
+6. Verify a real Flutter frame in the browser before reporting success.
+
 ### Profile Jank
 
 Example prompt:
@@ -409,6 +465,19 @@ skills/flutter-debugger-agent/scripts/flutter_env_report.sh
 Prints Flutter SDK, doctor, device, and emulator discovery output. When Flutter
 is not globally available, inspect repository tooling such as FVM before
 assuming the SDK is missing entirely.
+
+### Flutter Web Preview
+
+```bash
+node skills/flutter-browser-preview/scripts/flutter-web-preview.mjs \
+  --project /path/to/flutter/app \
+  --target lib/main.dart \
+  --port 3278
+```
+
+Runs `flutter run -d web-server` on `127.0.0.1`, prints the Codex browser URL,
+and keeps the terminal attached for hot reload and logs. Extra Flutter run
+arguments can be passed after `--`.
 
 ### Timeline Summary
 
@@ -514,6 +583,7 @@ available to the conversation.
 |-- skills/
 |   |-- flutter-project-setup/
 |   |-- flutter-debugger-agent/
+|   |-- flutter-browser-preview/
 |   |-- flutter-platform-integrations/
 |   |-- flutter-adaptive-ui/
 |   |-- flutter-ui-patterns/
@@ -542,6 +612,8 @@ The plugin is intentionally conservative about claiming success.
   native allocation behavior.
 - A lower total memory number alone is not treated as proof of a leak fix.
 - Platform integrations are tested on each affected host platform.
+- Browser previews prove that a real Flutter frame is visible, not only that a
+  localhost URL returned a response.
 - Golden files are not updated blindly.
 - Native UI coverage is not inferred from mocked Dart tests.
 

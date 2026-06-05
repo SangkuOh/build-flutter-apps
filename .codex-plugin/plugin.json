@@ -1,7 +1,7 @@
 {
   "name": "build-flutter-apps",
-  "version": "0.1.0",
-  "description": "Build Flutter apps with workflows for Dart setup, adaptive UI, architecture, native integrations, testing, debugging, DevTools profiling, and memory investigation.",
+  "version": "0.1.1",
+  "description": "Build Flutter apps with workflows for Dart setup, adaptive UI, architecture, native integrations, browser previews, testing, debugging, DevTools profiling, and memory investigation.",
   "author": {
     "name": "SangkuOh"
   },
@@ -15,14 +15,16 @@
     "integration-test",
     "platform-channels",
     "pigeon",
+    "preview",
+    "web-server",
     "performance",
     "debugging"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Build Flutter Apps",
-    "shortDescription": "Build, refine, test, profile, and debug Flutter apps with Dart, DevTools, and native platform workflows",
-    "longDescription": "Use Build Flutter Apps to set up current Flutter and Dart projects, build adaptive multi-platform UI, structure app architecture, refactor widget trees, add deep links and type-safe native integrations, test apps and plugins, audit runtime performance, analyze DevTools traces, investigate memory leaks, and debug apps on selected Flutter targets.",
+    "shortDescription": "Build, preview, test, profile, and debug Flutter apps with Dart, DevTools, and native workflows",
+    "longDescription": "Use Build Flutter Apps to set up current Flutter and Dart projects, build adaptive multi-platform UI, structure app architecture, refactor widget trees, preview Flutter apps in the Codex in-app browser, add deep links and type-safe native integrations, test apps and plugins, audit runtime performance, analyze DevTools traces, investigate memory leaks, and debug apps on selected Flutter targets.",
     "developerName": "SangkuOh",
     "category": "Developer Tools",
     "capabilities": [
@@ -31,7 +33,7 @@
       "Write"
     ],
     "defaultPrompt": [
-      "Build or debug a Flutter app with Dart, adaptive widgets, testing, and DevTools."
+      "Build, preview, or debug a Flutter app with Dart, adaptive widgets, testing, and DevTools."
     ],
     "brandColor": "#02569B",
     "composerIcon": "./assets/build-flutter-apps.svg",
