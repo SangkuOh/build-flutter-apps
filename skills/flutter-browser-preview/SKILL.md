@@ -1,28 +1,35 @@
 ---
 name: flutter-browser-preview
-description: Preview Flutter apps inside the Codex in-app browser by running Flutter web-server previews or mirroring Flutter apps launched on Android emulators, connected devices, or iOS Simulators. Use when a user wants browser-visible Flutter proof, live UI iteration in Codex, or an interactive preview while using hot reload.
+description: Preview Flutter apps inside the Codex in-app browser with a browser-first Flutter web-server workflow, falling back to Android or iOS runtime mirrors only when platform-specific behavior is explicitly required. Use when a user wants browser-visible Flutter proof, live UI iteration in Codex, or an interactive in-app browser preview while using hot reload.
 ---
 
 # Flutter Browser Preview
 
 ## Overview
 
-Use this skill with `../flutter-debugger-agent/SKILL.md`. The debugger agent
-launches Flutter on an explicit target; this skill makes the running UI visible
-inside the Codex in-app browser.
+Use this skill with `../flutter-debugger-agent/SKILL.md`. For a generic
+"preview inside Codex" request, do not launch an iOS Simulator, Android
+emulator, or desktop runner. Use the Flutter web-server path so the preview
+itself is the Codex in-app browser tab.
 
-Choose the preview path from the target:
+Choose the preview path from the user's target requirement:
 
-| Target | Browser preview path |
+| User requirement | Browser preview path |
 | --- | --- |
-| Flutter web | Run the bundled `flutter-web-preview.mjs` helper and open its printed URL. |
-| Android emulator or device | Run `flutter run -d <adb-serial>`, then mirror the same adb target with the Android emulator browser bridge. |
-| iOS Simulator | Run `flutter run -d <simulator-udid>`, then mirror the same simulator with `serve-sim`. |
+| General Flutter UI preview, layout work, state flow, routing, visual iteration | Run the bundled `flutter-web-preview.mjs` helper and open its printed URL in the Codex in-app browser. |
+| Android-specific plugin, permission, platform-channel, native-view, or rendering behavior | Run `flutter run -d <adb-serial>`, then mirror the same adb target with the Android emulator browser bridge. |
+| iOS-specific plugin, permission, platform-channel, native-view, Cupertino, or rendering behavior | Run `flutter run -d <simulator-udid>`, then mirror the same simulator with `serve-sim`. |
+
+If the user says "Codex 내부", "in-app browser", "preview", "프리뷰를 보고
+인터렉션", or similar without naming Android or iOS platform behavior, choose
+Flutter web. This matches the desired Codex-internal interaction loop and avoids
+opening a separate Simulator window.
 
 ## Flutter Web Workflow
 
-Use web when the task only needs Flutter widget behavior, layout, routing, or a
-browser-safe app flow.
+Use web by default for Codex-internal preview work. It is the only Flutter path
+where the app itself runs in the Codex browser surface rather than being mirrored
+from a platform runtime.
 
 1. Inspect the Flutter environment and choose the web-server target:
 
@@ -44,8 +51,8 @@ browser-safe app flow.
 
 3. Open the printed URL in the Codex in-app browser.
 
-4. Verify that the actual Flutter app rendered. A successful HTTP response is
-   not enough proof.
+4. Verify that the actual Flutter app rendered and that browser clicks or text
+   input affect the UI. A successful HTTP response is not enough proof.
 
 Useful options:
 
@@ -59,12 +66,15 @@ node <skill-root>/scripts/flutter-web-preview.mjs \
 ```
 
 Keep the terminal alive while previewing. Use the active `flutter run` terminal
-for hot reload, hot restart, and logs.
+for hot reload, hot restart, and logs. This should be the first workflow used
+for Codex-internal preview unless the user explicitly asks for Android or iOS
+runtime behavior.
 
 ## Android Workflow
 
-Use Android when the task depends on Android platform behavior, plugins,
-permissions, native views, platform channels, or Android rendering.
+Use Android only when the task depends on Android platform behavior, plugins,
+permissions, native views, platform channels, or Android rendering. Do not use
+this workflow for a generic Codex-internal Flutter preview.
 
 1. Load `flutter-debugger-agent` and select one adb target:
 
@@ -93,8 +103,9 @@ permissions, native views, platform channels, or Android rendering.
 
 ## iOS Simulator Workflow
 
-Use iOS Simulator when the task depends on Cupertino behavior, iOS plugins,
-permissions, native views, platform channels, or iOS rendering.
+Use iOS Simulator only when the task depends on Cupertino behavior, iOS plugins,
+permissions, native views, platform channels, or iOS rendering. Do not use this
+workflow for a generic Codex-internal Flutter preview.
 
 1. Load `flutter-debugger-agent` and select one Simulator UDID:
 
@@ -125,12 +136,19 @@ permissions, native views, platform channels, or iOS rendering.
 4. Open the URL printed by `serve-sim` in the Codex in-app browser and verify a
    real iOS frame. Use the `flutter run` terminal for hot reload.
 
+`serve-sim` may bring the macOS Simulator app forward while establishing the
+stream. That is acceptable only for iOS-specific runtime verification. It is not
+the default path for a user who simply wants to preview and interact with a
+Flutter UI inside Codex.
+
 ## Support Boundary
 
-- Flutter web preview is the fastest Codex browser path, but it is not proof of
-  Android or iOS platform behavior.
+- Flutter web preview is the default Codex-internal interaction path, but it is
+  not proof of Android or iOS platform behavior.
 - Android and iOS previews are visual mirrors of a running Flutter app. Keep
   `flutter run` open for logs, VM Service, hot reload, and hot restart.
+- A separate Simulator or emulator appearing is a signal that the workflow has
+  moved from Codex-internal Flutter preview to platform-runtime verification.
 - Use a physical device when representative performance, sensors, camera,
   Bluetooth, biometric, OEM, or hardware-specific behavior matters.
 - Do not claim success from a loaded preview URL alone. Capture browser-visible
