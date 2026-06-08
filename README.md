@@ -60,12 +60,10 @@ A single task can activate more than one skill. For example:
 
 ## Current Release
 
-`v0.1.3` makes generic Flutter previews browser-first and side-panel visible.
-For ordinary Codex-internal UI iteration, Codex runs the bundled
-`flutter-web-preview.mjs` helper, opens the printed URL in the visible Codex
-side-panel browser, and verifies at least one real UI interaction before
-reporting success. Android and iOS runtime mirrors are reserved for
-platform-specific behavior.
+`v0.1.4` packages the repository as a Codex Git marketplace. The repository now
+exposes the plugin from `plugins/build-flutter-apps` through
+`.agents/plugins/marketplace.json`, while preserving the browser-first,
+side-panel-visible preview guidance from `v0.1.3`.
 
 ## Included Skills
 
@@ -551,7 +549,21 @@ binary.
 
 ## Install From This Repository
 
-Clone the plugin into a local Codex plugin source directory:
+Install the repository as a Codex Git marketplace:
+
+```bash
+codex plugin marketplace add SangkuOh/build-flutter-apps --ref v0.1.4
+codex plugin add build-flutter-apps@build-flutter-apps
+codex plugin list
+```
+
+The repository includes `.agents/plugins/marketplace.json`, so Codex can track
+it as a marketplace source directly. The marketplace exposes the plugin at the
+`plugins/build-flutter-apps` path and gates it to Codex through the same
+`products: ["CODEX"]` policy shape used by Codex-native development plugins.
+
+For local development, clone the plugin into a local Codex plugin source
+directory:
 
 ```bash
 mkdir -p ~/plugins
@@ -559,30 +571,12 @@ git clone https://github.com/SangkuOh/build-flutter-apps.git \
   ~/plugins/build-flutter-apps
 ```
 
-Expose the source through your personal Codex marketplace at
-`~/.agents/plugins/marketplace.json`. If the file already exists, merge the
-following entry into its `plugins` array instead of replacing unrelated
-entries:
-
-```json
-{
-  "name": "build-flutter-apps",
-  "source": {
-    "source": "local",
-    "path": "./plugins/build-flutter-apps"
-  },
-  "policy": {
-    "installation": "AVAILABLE",
-    "authentication": "ON_INSTALL"
-  },
-  "category": "Developer Tools"
-}
-```
-
-Install the plugin from the configured personal marketplace:
+Register the local repository as its own Codex marketplace, then install the
+plugin from that marketplace:
 
 ```bash
-codex plugin add build-flutter-apps@personal
+codex plugin marketplace add ~/plugins/build-flutter-apps
+codex plugin add build-flutter-apps@build-flutter-apps
 codex plugin list
 ```
 
@@ -590,8 +584,9 @@ To update an existing local install:
 
 ```bash
 git -C ~/plugins/build-flutter-apps pull --ff-only
-codex plugin remove build-flutter-apps@personal
-codex plugin add build-flutter-apps@personal
+codex plugin marketplace upgrade build-flutter-apps
+codex plugin remove build-flutter-apps@build-flutter-apps
+codex plugin add build-flutter-apps@build-flutter-apps
 ```
 
 Start a new Codex thread after installation so the new plugin skills are
@@ -601,24 +596,29 @@ available to the conversation.
 
 ```text
 .
-|-- .codex-plugin/
-|   `-- plugin.json
-|-- agents/
-|   `-- openai.yaml
-|-- assets/
-|   `-- build-flutter-apps.svg
-|-- skills/
-|   |-- flutter-project-setup/
-|   |-- flutter-debugger-agent/
-|   |-- flutter-browser-preview/
-|   |-- flutter-platform-integrations/
-|   |-- flutter-adaptive-ui/
-|   |-- flutter-ui-patterns/
-|   |-- flutter-view-refactor/
-|   |-- flutter-performance-audit/
-|   |-- flutter-devtools-performance/
-|   |-- flutter-memory-leaks/
-|   `-- flutter-testing/
+|-- .agents/
+|   `-- plugins/
+|       `-- marketplace.json
+|-- plugins/
+|   `-- build-flutter-apps/
+|       |-- .codex-plugin/
+|       |   `-- plugin.json
+|       |-- agents/
+|       |   `-- openai.yaml
+|       |-- assets/
+|       |   `-- build-flutter-apps.svg
+|       `-- skills/
+|           |-- flutter-project-setup/
+|           |-- flutter-debugger-agent/
+|           |-- flutter-browser-preview/
+|           |-- flutter-platform-integrations/
+|           |-- flutter-adaptive-ui/
+|           |-- flutter-ui-patterns/
+|           |-- flutter-view-refactor/
+|           |-- flutter-performance-audit/
+|           |-- flutter-devtools-performance/
+|           |-- flutter-memory-leaks/
+|           `-- flutter-testing/
 |-- LICENSE
 `-- README.md
 ```
